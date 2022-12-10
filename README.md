@@ -4,12 +4,15 @@ This is a Chat app developed in react.
 In order to start, you need to create your own Firebase project and enable the google authentication as well as firestore.
 
 Create a .env file in the root folder of this project and insert your firebase information like this:
+
+```
 REACT_APP_FIREBASE_API_KEY=YOUR API KEY
 REACT_APP_FIREBASE_AUTH_DOMAIN=YOUR AUTH DOMAIN
 REACT_APP_FIREBASE_PROJECT_ID=YOUR PROJECT ID
 REACT_APP_FIREBASE_STORAGE_BUCKET=YOUR STORAGE BUCKET
 REACT_APP_FIREBASE_MESSAGING_SENDER_ID=YOUR MESSAGING SENDER ID
 REACT_APP_FIREBASE_APP_ID=YOUR APP ID
+```
 
 After you completed that run:
 
