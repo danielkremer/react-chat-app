@@ -62,6 +62,9 @@ const Input = () => {
     setImg(null);
   };
 
+  const handleKey = (e: any) => {
+    e.code === 'Enter' && handleSend();
+  };
   return (
     <div className='flex flex-row items-center bg-gray-900 border-t rounded-b-lg border-gray-700 py-4 px-4 '>
       <span className='text-md mr-3 cursor-pointer'>
@@ -70,12 +73,13 @@ const Input = () => {
       <input
         className='w-full focus:outline-none text-neutral-100 placeholder-neutral-300 pl-5 bg-slate-700 rounded-xl text-xs py-2 mr-2'
         type='text'
+        onKeyDown={handleKey}
         placeholder='Type something...'
         onChange={(e) => setText(e.target.value)}
         value={text}
       />
 
-      <div className='send'>
+      <div>
         <Button onClick={handleSend}>Send</Button>
       </div>
     </div>

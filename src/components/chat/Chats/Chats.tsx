@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 const Chats = () => {
   const [chats, setChats] = useState<any>([]);
   const loggedInUser = useAppSelector(({ user }) => user.loggedInUser);
-
+  const user = useAppSelector(({ chat }) => chat.userInfo.user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,30 +34,48 @@ const Chats = () => {
     dispatch(changeUser(payload));
   };
 
+  const getFormattedChats = () => {
+    if (chats && !!Object.entries(chats)) {
+      return Object.entries(chats);
+    } else {
+      return [];
+    }
+  };
+
+  const chosenUser = (chat: any) => {
+    if (chat[1].userInfo) {
+      if (user.uid === chat[1].userInfo.uid) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   return (
-    <div>
-      {chats &&
-        Object.entries(chats)
-          ?.sort((a: any, b: any) => b[1].date - a[1].date)
-          .map((chat: any) => (
-            <div
-              className='flex py-1.5 px-3 items-center gap-2 cursor-pointer bg-indigo-500 m-3 rounded-lg'
-              key={chat[0]}
-              onClick={() => handleSelect(chat[1].userInfo)}
-            >
-              <div className='flex flex-row items-center'>
-                <span className='avatar avatar-circle avatar-sm mr-3'>
-                  <span className='avatar-icon avatar-icon-sm '>
-                    <HiOutlineUser />
-                  </span>
+    <div className='overflow-y-scroll  scrollbar'>
+      {getFormattedChats()
+        ?.sort((a: any, b: any) => b[1].date - a[1].date)
+        .map((chat: any) => (
+          <div
+            className={`flex py-1.5 px-3 items-center gap-2 cursor-pointer bg-indigo-500 m-3 rounded-lg ${
+              chosenUser(chat) && 'bg-indigo-400'
+            }`}
+            key={chat[0]}
+            onClick={() => handleSelect(chat[1].userInfo)}
+          >
+            <div className='flex flex-row items-center'>
+              <span className='avatar avatar-circle avatar-sm mr-3'>
+                <span className='avatar-icon avatar-icon-sm '>
+                  <HiOutlineUser />
                 </span>
-                <div className='text-white'>
-                  <span>{chat[1].userInfo.displayName}</span>
-                  <p className='text-xs'>{chat[1].lastMessage?.text}</p>
-                </div>
+              </span>
+              <div className='text-white'>
+                <span>{chat[1].userInfo ? chat[1].userInfo.displayName : 'No User Info'}</span>
+                <p className='text-xs'>{chat[1].lastMessage?.text}</p>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
     </div>
   );
 };

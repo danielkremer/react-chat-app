@@ -6,7 +6,6 @@ import Message from '../Message';
 
 const Messages = () => {
   const userInfo: any = useAppSelector(({ chat }) => chat.userInfo);
-
   const [messages, setMessages] = useState<any>([]);
   useEffect(() => {
     const unsub = onSnapshot(doc(db, 'chats', userInfo.chatId), (doc) => {
