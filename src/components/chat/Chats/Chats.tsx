@@ -43,7 +43,7 @@ const Chats = () => {
   };
 
   const chosenUser = (chat: any) => {
-    if (chat[1].userInfo) {
+    if (chat[1].userInfo && user) {
       if (user.uid === chat[1].userInfo.uid) {
         return true;
       }

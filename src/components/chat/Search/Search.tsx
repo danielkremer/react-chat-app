@@ -7,7 +7,6 @@ import {
   serverTimestamp,
   setDoc,
   updateDoc,
-  where,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -20,7 +19,6 @@ const Search = () => {
   const [user, setUser] = useState<any>(null);
   const [users, setUsers] = useState<any[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
-  const [err, setErr] = useState(false);
 
   const loggedInUser = useAppSelector(({ user }) => user.loggedInUser);
 
@@ -47,22 +45,6 @@ const Search = () => {
       tmpUsers.push(doc.data());
     });
     setUsers(tmpUsers);
-  };
-  const handleSearch = async () => {
-    const q = query(collection(db, 'users'), where('displayName', '==', username));
-
-    try {
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setUser(doc.data());
-      });
-    } catch (err) {
-      setErr(true);
-    }
-  };
-
-  const handleKey = (e: any) => {
-    e.code === 'Enter' && handleSearch();
   };
 
   const handleSelect = async (user: any) => {
@@ -117,7 +99,6 @@ const Search = () => {
               className='pl-7 input input-md h-8 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
               type='text'
               placeholder='Search for contact...'
-              // onKeyDown={handleKey}
               onChange={(e) => searchUser(e.target.value)}
               value={username}
               style={{ paddingLeft: '2.125rem' }}
@@ -125,7 +106,6 @@ const Search = () => {
           </span>
         </div>
       </div>
-      {err && <span className='p-3 mb-2 mx-3 text-red-400'>User not found!</span>}
       {user && (
         <div
           className='p-3 cursor-pointer mb-2 mx-3 rounded-xl text-gray-300'

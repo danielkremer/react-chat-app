@@ -7,14 +7,17 @@ import Message from '../Message';
 const Messages = () => {
   const userInfo: any = useAppSelector(({ chat }) => chat.userInfo);
   const [messages, setMessages] = useState<any>([]);
+  console.log(userInfo, 'userInfo');
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, 'chats', userInfo.chatId), (doc) => {
-      doc.exists() && setMessages(doc.data().messages);
-    });
-
-    return () => {
-      unsub();
-    };
+    // const res = await getDoc(doc(db, 'chats', combinedId));
+    if (userInfo && userInfo.chatId) {
+      const unsub = onSnapshot(doc(db, 'chats', userInfo.chatId), (doc) => {
+        doc.exists() && setMessages(doc.data().messages);
+      });
+      return () => {
+        unsub();
+      };
+    }
   }, [userInfo.chatId]);
 
   return (

@@ -30,5 +30,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+Log in with at least two users to be able to start a chat.
+Search for the name of a user in the search area.
+Chose a user you've found and start chatting.
+
 ![This is an image1](public/login-screen.png)
 ![This is an image2](public/chat-screen.png)
